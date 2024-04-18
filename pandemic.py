@@ -87,6 +87,10 @@ def main():
 
         # Clear screen
         screen.fill(WHITE)
+        font = pygame.font.Font(None, 36)
+        population = 100
+        population_text = font.render(f"Population: {population}", True, RED)
+        screen.blit(population_text, (10, HEIGHT - 50))
 
         # Update and draw humans
         for human in humans:
