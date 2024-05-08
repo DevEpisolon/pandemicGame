@@ -9,13 +9,9 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 NUM_WHITE_CIRCLES = 1000  # Adjust the number of white circles
 CIRCLE_RADIUS = 10
-WHITE_CIRCLE_SPEED = .8
+WHITE_CIRCLE_SPEED = 0.8  # Adjusted for slower spread
 RED_CIRCLE_SPEED = 1.5
 MOVEMENT_THRESHOLD = 5
-
-# Adjustable parameters for virus spread and threat potential
-WHITE_CIRCLE_SPEED = 1.5  # Rate of spread for the virus
-RED_CIRCLE_SPEED = 1.5  # Threat potential of the virus
 
 # Initialize Pygame
 pygame.init()
@@ -35,14 +31,14 @@ def create_circle(color):
 # Create white circles
 white_circles = [create_circle(WHITE) for _ in range(NUM_WHITE_CIRCLES)]
 
-# Create red circles
+# Create red circles (initially infected)
 red_circles = [{
     'x': random.randint(CIRCLE_RADIUS, SCREEN_WIDTH - CIRCLE_RADIUS),
     'y': random.randint(CIRCLE_RADIUS, SCREEN_HEIGHT - CIRCLE_RADIUS),
     'color': RED,
     'angle': random.uniform(0, 2 * math.pi),  # Random initial angle for movement
     'speed': RED_CIRCLE_SPEED
-} for _ in range(10)]
+} for _ in range(1)]  # Only one initially infected
 
 # Main loop
 running = True
@@ -87,4 +83,3 @@ while running:
 
 # Quit Pygame
 pygame.quit()
-
