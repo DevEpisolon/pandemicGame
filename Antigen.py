@@ -16,6 +16,7 @@ speed_button = pygame.Rect(25, 50, 150, 50)
 virus_button = pygame.Rect(25, 110, 150, 50)
 rcell_button = pygame.Rect(25, 170, 150, 50)
 wcell_button = pygame.Rect(25, 230, 150, 50)
+pause_button = pygame.Rect(25, 290, 150, 50)
 
 pathogens = []
 rcells = []
@@ -98,6 +99,10 @@ def draw_menu():
     spawn_button_text = arial.render("Create White Cell", True, (255,255,255))
     screen.blit(spawn_button_text, (30, 240))
 
+    pygame.draw.rect(screen, (44, 95, 80), pause_button)
+    spawn_button_text = arial.render("Pause", True, (255, 255, 255))
+    screen.blit(spawn_button_text, (30, 300))
+
 def interaction():
     global menu_open, speed
 
@@ -108,6 +113,19 @@ def interaction():
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_m:
                 menu_open = not menu_open
+            elif event.key == pygame.K_SPACE:
+                if speed == 0:
+                    speed = 1
+                else:
+                    speed = 0
+            elif event.key == pygame.K_1:
+                for i in range(1,10):
+                    create_rcell()
+            elif event.key == pygame.K_2:
+                create_virus(None)
+            elif event.key == pygame.K_3:
+                for i in range(1, 10):
+                    create_wcell()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if menu_open:
                 if speed_button.collidepoint(event.pos):
@@ -118,6 +136,8 @@ def interaction():
                     create_rcell()
                 elif wcell_button.collidepoint(event.pos):
                     create_wcell()
+                elif pause_button.collidepoint(event.pos):
+                    speed = 0
 
 def physics_step():
 
@@ -163,8 +183,10 @@ def physics_step():
             for j in range(1, 10):
                 create_virus(circle)
 
-            if infected[i]:
+            try:
                 del infected[i]
+            except:
+                print("Array Index Invalid")
 
     # Check collision with infected circles
     for i, cell in enumerate(rcells):
@@ -173,17 +195,20 @@ def physics_step():
             if distance <= cell['radius'] + virus['radius'] + 5:
                 infect_cell(cell)
 
-                if rcells[i]:
+                try:
                     del rcells[i]
-                if pathogens[j]:
                     del pathogens[j]
+                except:
+                    print("Array Index Invalid")
 
     for cell in wcells:
         for j, virus in enumerate(pathogens):
             distance = ((cell['x'] - virus['x']) ** 2 + (cell['y'] - virus['y']) ** 2) ** 0.5
             if distance <= cell['radius'] + virus['radius'] + 5:
-                if pathogens[j]:
+                try:
                     del pathogens[j]
+                except:
+                    print("Array Index Invalid")
 
 while True:
     screen.fill((26,95,76))
