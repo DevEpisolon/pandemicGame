@@ -7,10 +7,10 @@ SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
-NUM_WHITE_CIRCLES = 1500  # Increase the number of white circles
+NUM_WHITE_CIRCLES = 700# Increase the number of white circles
 CIRCLE_RADIUS = 10
-WHITE_CIRCLE_SPEED = 1.5
-INFECTED_CIRCLE_SPEED = 2.5  # Adjusted for faster spread
+WHITE_CIRCLE_SPEED = .8
+INFECTED_CIRCLE_SPEED = .3  # Adjusted for faster spread
 MOVEMENT_THRESHOLD = 5
 
 # Initialize Pygame
@@ -38,7 +38,7 @@ infected_circles = [{
     'color': RED,
     'angle': random.uniform(0, 2 * math.pi),  # Random initial angle for movement
     'speed': INFECTED_CIRCLE_SPEED
-} for _ in range(10)]  # Adjusted for initial infected count
+} for _ in range(25)]  # Adjusted for initial infected count
 
 # Main loop
 running = True
@@ -79,7 +79,7 @@ while running:
                 circle['speed'] = INFECTED_CIRCLE_SPEED
 
     pygame.display.flip()  # Update the display
-    clock.tick(120)  # Limit to 60 frames per second
+    clock.tick(30)  # Limit to 60 frames per second
 
 # Quit Pygame
 pygame.quit()

@@ -7,11 +7,11 @@ SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
-NUM_WHITE_CIRCLES = 1000  # Increase the number of white circles
+NUM_WHITE_CIRCLES = 700
 CIRCLE_RADIUS = 10
-INFECTED_CIRCLE_RADIUS = 30  # Adjusted radius for infected circles
+INFECTED_CIRCLE_RADIUS = 50
 WHITE_CIRCLE_SPEED = 1.5
-INFECTED_CIRCLE_SPEED = 0.8  # Adjusted for faster spread
+INFECTED_CIRCLE_SPEED = 0.8
 MOVEMENT_THRESHOLD = 5
 
 # Initialize Pygame
@@ -26,7 +26,7 @@ def create_circle(color, radius):
         'y': random.randint(radius, SCREEN_HEIGHT - radius),
         'color': color,
         'radius': radius,
-        'angle': random.uniform(0, 2 * math.pi),  # Random initial angle for circular motion
+        'angle': random.uniform(0, 2 * math.pi),  
         'speed': WHITE_CIRCLE_SPEED
     }
 
@@ -39,14 +39,14 @@ infected_circles = [{
     'y': random.randint(INFECTED_CIRCLE_RADIUS, SCREEN_HEIGHT - INFECTED_CIRCLE_RADIUS),
     'color': RED,
     'radius': INFECTED_CIRCLE_RADIUS,
-    'angle': random.uniform(0, 2 * math.pi),  # Random initial angle for movement
+    'angle': random.uniform(0, 2 * math.pi),
     'speed': INFECTED_CIRCLE_SPEED
-} for _ in range(1)]  # Adjusted for initial infected count
+} for _ in range(1)]
 
 # Main loop
 running = True
 while running:
-    screen.fill((0, 0, 0))  # Clear the screen
+    screen.fill((0, 0, 0))  
 
     # Event handling
     for event in pygame.event.get():
@@ -55,20 +55,16 @@ while running:
 
     # Update white circles
     for circle in white_circles:
-        # Update circular motion
         circle['x'] += circle['speed'] * math.cos(circle['angle'])
         circle['y'] += circle['speed'] * math.sin(circle['angle'])
-        # Change direction when hitting edges
         if circle['x'] < 0 or circle['x'] > SCREEN_WIDTH or circle['y'] < 0 or circle['y'] > SCREEN_HEIGHT:
             circle['angle'] += math.pi / 2
         pygame.draw.circle(screen, circle['color'], (round(circle['x']), round(circle['y'])), circle['radius'])
 
     # Update infected circles
     for infected_circle in infected_circles:
-        # Update random movement
         infected_circle['x'] += infected_circle['speed'] * math.cos(infected_circle['angle'])
         infected_circle['y'] += infected_circle['speed'] * math.sin(infected_circle['angle'])
-        # Change direction when hitting edges
         if infected_circle['x'] < 0 or infected_circle['x'] > SCREEN_WIDTH or infected_circle['y'] < 0 or infected_circle['y'] > SCREEN_HEIGHT:
             infected_circle['angle'] = random.uniform(0, 2 * math.pi)
         pygame.draw.circle(screen, infected_circle['color'], (round(infected_circle['x']), round(infected_circle['y'])), infected_circle['radius'])
@@ -76,14 +72,15 @@ while running:
     # Check collision with infected circles
     for circle in white_circles:
         for infected_circle in infected_circles:
-            distance = ((circle['x'] - infected_circle['x']) ** 2 + (circle['y'] - infected_circle['y']) ** 2) ** 0.5
+            distance = math.hypot(circle['x'] - infected_circle['x'], circle['y'] - infected_circle['y'])
             if distance <= circle['radius'] + infected_circle['radius'] + MOVEMENT_THRESHOLD:
                 circle['color'] = RED
                 circle['speed'] = INFECTED_CIRCLE_SPEED
                 circle['radius'] = INFECTED_CIRCLE_RADIUS
 
-    pygame.display.flip()  # Update the display
-    clock.tick(60)  # Limit to 60 frames per second
+    pygame.display.flip()  
+    clock.tick(60)  
 
 # Quit Pygame
 pygame.quit()
+

@@ -7,15 +7,13 @@ SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
-NUM_WHITE_CIRCLES = 1000  # Adjust the number of white circles
+NUM_WHITE_CIRCLES = 800  # Adjust the number of white circles
 CIRCLE_RADIUS = 10
-WHITE_CIRCLE_SPEED = .8
-RED_CIRCLE_SPEED = 1.5
 MOVEMENT_THRESHOLD = 5
 
 # Adjustable parameters for virus spread and threat potential
-WHITE_CIRCLE_SPEED = 1.5  # Rate of spread for the virus
-RED_CIRCLE_SPEED = 1.5  # Threat potential of the virus
+WHITE_CIRCLE_SPEED = 2  # Rate of spread for the virus
+RED_CIRCLE_SPEED = .5  # Threat potential of the virus
 
 # Initialize Pygame
 pygame.init()
